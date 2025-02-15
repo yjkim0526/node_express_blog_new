@@ -13,11 +13,38 @@ const jwtSecret = process.env.JWT_SECRET;
  *  Admin page
  *  GET /admin
 */
- 
-router.get('/admin', asyncHandler( async (req, res) => {
+ router.get('/admin', asyncHandler( async (req, res) => {
 	const locals = { title: "관리자" };
 	res.render('admin/index', {locals, layout: adminLayout});
  }));
+
+ /**
+ *  Admin page
+ *  POST /admin
+*/
+ router.post('/admin', asyncHandler( async (req, res) => {
+	const { username, password, role } = req.body;
+	const user = await User.findOne( { username });
+	if (!user) {
+    return res.status(401).json({ message: "일치하는 사용자가 없습니다. " });
+  }
+
+	// Compare hashed password with the stored password
+	const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(401).json({ message: "비밀번호가 일치하지 않습니다." });
+  }
+
+  // Generate a JSON Web Token
+  const token = jwt.sign({ id: user._id }, jwtSecret);
+
+  // Set the token as a cookie and redirect to the admin page
+  res.cookie("token", token, { httpOnly: true });
+  
+	res.send(" passport math ... ");
+	// res.redirect("/allPosts");
+ }));
+
 
 
 /*
