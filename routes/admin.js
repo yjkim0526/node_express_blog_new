@@ -15,6 +15,12 @@ const jwtSecret = process.env.JWT_SECRET;
 */
  router.get('/admin', asyncHandler( async (req, res) => {
 	const locals = { title: "관리자" };
+	const adminRole = await User.findOne( { role: "admin" } );
+	if (!adminRole) {
+    const locals = { title: "사용자" };
+  } else {
+		const locals = { title: "관리자" };
+	}
 	res.render('admin/index', {locals, layout: adminLayout});
  }));
 
@@ -46,7 +52,6 @@ const jwtSecret = process.env.JWT_SECRET;
  }));
 
 
-
 /*
  *  Register Admin
  *  POST /register
@@ -75,5 +80,7 @@ router.post('/register', asyncHandler( async (req, res) => {
 
 }));
 
- 
+
+
+
 module.exports = router;
