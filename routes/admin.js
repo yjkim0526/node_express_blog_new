@@ -4,6 +4,7 @@ const router = express.Router();
 const adminLayout = "../views/layouts/admin.ejs";
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
+const Post = require("../models/Post");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
@@ -47,8 +48,8 @@ const jwtSecret = process.env.JWT_SECRET;
   // Set the token as a cookie and redirect to the admin page
   res.cookie("token", token, { httpOnly: true });
   
-	res.send(" passport math ... ");
-	// res.redirect("/allPosts");
+	// res.send(" passport math ... ");
+	res.redirect("/list");
  }));
 
 
@@ -80,7 +81,25 @@ router.post('/register', asyncHandler( async (req, res) => {
 
 }));
 
+/*
+ *  All post list
+ *  GET /list
+*/
+router.get('/list', asyncHandler( async (req, res) => {
+	const locals = { title: "list" };
+	const data = await Post.find();
+	
+	res.render('admin/list', {locals, data, layout: adminLayout});
+ }));
 
 
+/*
+ *  Admin logout
+ *  GET /logout
+*/
+ router.get("/logout", (req, res) => {
+	res.clearCookie("token");
+	res.redirect("/");
+ });
 
 module.exports = router;
