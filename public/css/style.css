@@ -293,3 +293,14 @@ img {
   padding: 10px 0;
 }
 
+#custom_textarea {
+  width: 300px;
+  height: 30px;
+  font-size: 18px;
+  background-color: #8b8b8b1c;
+  resize: none;
+  color: black;
+  border: none;
+  border-bottom: 2px solid #0000007e;
+  outline: none;
+}

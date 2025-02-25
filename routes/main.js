@@ -26,6 +26,7 @@ router.get("/about", asyncHandler( async (req, res) => {
 *  GET /post/:id 
 */
 router.get("/post/:id", asyncHandler( async (req, res) => {
+	console.log(`>> post/${req.params.id} ---`);
 	const data = await Post.findOne({ _id: req.params.id });
 	res.render("post", { data, layout: mainLayout });
 }));

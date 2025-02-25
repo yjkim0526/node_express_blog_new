@@ -1,18 +1,38 @@
-<div class="admin-title">
+<div class="admin-title mt-5">
 	<h2><%=locals.title%></h2>
-	<a href="#" class="button">+새 게시물</a>
+	<a href="/new" class="button">+새 게시물</a>
 </div>
+<hr>
+<div class="mt-4">
+	<ul class="admin-posts">
+		<% data.forEach(post => { %>
+		<li>
+			<a href="/edit/<%=post._id%>"><h3><%=post.title%></h3></a>
+			<div class="admin-post-controls">
+				<a href="/edit/<%=post._id%>" class="btn">수정</a>
+				<form action="/edit/<%=post._id%>" method="POST" id="frm">
+					<input type='hidden' name='mode' id='mode' value="del">
+					<button class="btn btn-dark" id="btnDel">삭제</button>
+				</form>
+			</div>
+		</li>
+		<% }) %>
+	</ul>
+</div>
+<script>
+	let frm = document.querySelector('#frm');
+	let btnDel = document.querySelector('#btnDel');
+	let mode = document.querySelector('#mode');
+	console.log(">> mode : " + mode);
 
-<ul class="admin-posts">
-	<% data.forEach(post => { %>
-  <li>
-    <a href="/posts/<%=post.id%>"><h3><%=post.title%></h3></a>
-		<div class="admin-post-controls">
-			<a href="/posts/<%=post._id%>/edit" class="btn">수정</a>
-      <form action="/posts/<%=post._id%>" method="POST">
-        <input type="submit" class="btn-delete btn" value="삭제">
-      </form>
-		</div>
-  </li>
-  <% }) %>
-</ul>
+	btnDel.addEventListener("click", (e) => {
+		console.log("btnDel click");
+		e.preventDefault();
+		if (confirm("정말 삭제 하시겠습니까?")){
+			frm.action = `/edit/${id}`;
+			frm.submit();
+		}
+		return false;
+	});
+
+</script>

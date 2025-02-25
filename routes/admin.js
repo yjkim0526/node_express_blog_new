@@ -52,7 +52,6 @@ const jwtSecret = process.env.JWT_SECRET;
 	res.redirect("/list");
  }));
 
-
 /*
  *  Register Admin
  *  POST /register
@@ -92,6 +91,80 @@ router.get('/list', asyncHandler( async (req, res) => {
 	res.render('admin/list', {locals, data, layout: adminLayout});
  }));
 
+
+ /*
+*  블로그 추가하기
+*  GET /new
+*/
+router.get("/new", asyncHandler( async (req, res) => {
+	console.log(`>> new ---`);
+	const locals = { title: "new" };
+
+	res.render("admin/new", { locals, layout: adminLayout });
+	// res.send(`edit/${req.params.id} ---`);
+}));
+
+ /*
+*  블로그 추가하기
+*  POST /new
+*/
+router.post("/new", asyncHandler( async (req, res) => {
+	console.log(`>> new ---`);
+	const locals = { title: "new" };
+	console.log(req.body);
+	const { title, content } = req.body;
+	if ( !title || !content) {
+		return res.status(400).json({ message: "제목과 내용을 입력하세요." });
+  }
+	const post = await Post.create({ title, content }); 
+	res.redirect("/list");
+}));
+
+/*
+*  블로그 수정하기
+*  GET /edit/:id 
+*/
+router.get("/edit/:id", asyncHandler( async (req, res) => {
+	console.log(`>> edit/${req.params.id} ---`);
+	const locals = { title: "edit" };
+	const data = await Post.findOne({ _id: req.params.id });
+
+	res.render("admin/edit", { locals, data, layout: adminLayout });
+	// res.send(`edit/${req.params.id} ---`);
+}));
+
+
+/*
+* admin 게시물 수정 / 게시물 삭제
+* POST /edit/:id
+*/
+
+ router.post('/edit/:id', asyncHandler( async (req, res) => {
+	const mode = req.body.mode;
+	console.log('>> mode:', mode);
+	const sel_id = req.body.id;
+	console.log('>>sel_id:', sel_id);
+
+	if (mode === 'del') {
+		console.log("del mode");
+  	await Post.findByIdAndDelete(sel_id);
+		// res.send("success delete");
+	} 
+	else 
+	{
+		console.log("edit mode");
+			const { title, content } = req.body;
+		const post = await Post.findById(sel_id);
+		if (!post) {
+			throw new Error("Post not found.");
+		}
+		post.title = title;
+		post.content = content;
+		post.save();
+		// res.send("success Edit");		
+	}
+	res.redirect('/list');
+ }));
 
 /*
  *  Admin logout

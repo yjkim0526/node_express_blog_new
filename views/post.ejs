@@ -1,4 +1,16 @@
-<h1><%= data.title %></h1>
-<article class="article">
-	<%= data.content %>
-</article>
+<div class="container mt-5">
+
+		<input type='hidden' name='mode' id='mode' value="list">
+		<div class="mb-3 m-10">
+			<label for="title" class="form-label">Title</label>
+			<input type="text" class="form-control" name="title" id="title" placeholder="title" value="<%=data.title%>">
+		</div>
+		<div class="mb-3">
+			<label for="content" class="form-label">Content</label>
+			<textarea class="form-control" name="content" id="content" rows="12"><%= data.content %></textarea>
+		</div>
+		<div class="d-flex justify-content-center">
+			<a href="/" class="btn btn-dark" id="btnList">목록</a>
+		</div>
+
+</div>
