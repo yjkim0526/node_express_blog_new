@@ -4,12 +4,12 @@ const expressLayouts = require("express-ejs-layouts");
 const connectDB = require("./config/db");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 connectDB();
 
 app.set("view engine", "ejs");
-app.set("views","./views");
+app.set("views", "./views");
 
 app.use(expressLayouts);
 app.use(express.static("public"));
@@ -25,5 +25,5 @@ app.use("/", require("./routes/admin"));
 // });
 
 app.listen(port, () => {
-	console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
