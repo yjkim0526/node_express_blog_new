@@ -1,26 +1,29 @@
+<div class="top">
+  <h1 class="top-heading">로그인</h1>
+  <p class="top-body">(관리자 로그인) admin / 1234</p>
+</div>
 
-<h3>로그인</h3>
 <form action="/admin" method="POST">
-	<input type="hidden" id="role" name="role" value="user">
-	<label for="username">이름</label>
-  <input type="text" id="username" name="username" required>
+  <input type="hidden" id="role" name="role" value="user" />
+  <label for="username">이름</label>
+  <input type="text" id="username" name="username" required />
 
   <label for="password">비밀번호:</label>
-  <input type="password" id="password" name="password" required>
+  <input type="password" id="password" name="password" required />
 
-  <input type="submit" value="로그인" class="btn">
+  <input type="submit" value="로그인" class="btn" />
 </form>
 
 <% if (!locals.title) {%>
 <h3>관리자 등록</h3>
 <form action="/register" method="POST">
-	<input type="hidden" id="role" name="role" value="admin">
-	<label for="username">이름</label>
-  <input type="text" id="username" name="username" required>
+  <input type="hidden" id="role" name="role" value="admin" />
+  <label for="username">이름</label>
+  <input type="text" id="username" name="username" required />
 
   <label for="password">비밀번호:</label>
-  <input type="password" id="password" name="password" required>
+  <input type="password" id="password" name="password" required />
 
-  <input type="submit" value="등록" class="btn">
+  <input type="submit" value="등록" class="btn" />
 </form>
 <% } %>

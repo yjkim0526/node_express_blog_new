@@ -1,38 +1,41 @@
-<div class="admin-title mt-5">
-	<h2><%=locals.title%></h2>
-	<a href="/new" class="button">+새 게시물</a>
+<!-- Admin Logout -->
+<div class="header-button">
+  <a href="/logout" style="text-decoration: none">Admin Logout</a>
 </div>
-<hr>
+<div class="admin-title mt-5">
+  <h2><%=locals.title%></h2>
+  <a href="/new" class="button">+새 게시물</a>
+</div>
+<hr />
 <div class="mt-4">
-	<ul class="admin-posts">
-		<% data.forEach(post => { %>
-		<li>
-			<a href="/edit/<%=post._id%>"><h3><%=post.title%></h3></a>
-			<div class="admin-post-controls">
-				<a href="/edit/<%=post._id%>" class="btn">수정</a>
-				<form action="/edit/<%=post._id%>" method="POST" id="frm">
-					<input type='hidden' name='mode' id='mode' value="del">
-					<button class="btn btn-dark" id="btnDel">삭제</button>
-				</form>
-			</div>
-		</li>
-		<% }) %>
-	</ul>
+  <ul class="admin-posts">
+    <% data.forEach(post => { %>
+    <li>
+      <a href="/edit/<%=post._id%>"><h3><%=post.title%></h3></a>
+      <div class="admin-post-controls">
+        <a href="/edit/<%=post._id%>" class="btn">수정</a>
+        <form action="/edit/<%=post._id%>" method="POST" id="frm">
+          <input type="hidden" name="mode" id="mode" value="del" />
+          <button class="btn btn-dark" id="btnDel">삭제</button>
+        </form>
+      </div>
+    </li>
+    <% }) %>
+  </ul>
 </div>
 <script>
-	let frm = document.querySelector('#frm');
-	let btnDel = document.querySelector('#btnDel');
-	let mode = document.querySelector('#mode');
-	console.log(">> mode : " + mode);
+  let frm = document.querySelector("#frm");
+  let btnDel = document.querySelector("#btnDel");
+  let mode = document.querySelector("#mode");
+  console.log(">> mode : " + mode);
 
-	btnDel.addEventListener("click", (e) => {
-		console.log("btnDel click");
-		e.preventDefault();
-		if (confirm("정말 삭제 하시겠습니까?")){
-			frm.action = `/edit/${id}`;
-			frm.submit();
-		}
-		return false;
-	});
-
+  btnDel.addEventListener("click", (e) => {
+    console.log("btnDel click");
+    e.preventDefault();
+    if (confirm("정말 삭제 하시겠습니까?")) {
+      frm.action = `/edit/${id}`;
+      frm.submit();
+    }
+    return false;
+  });
 </script>
